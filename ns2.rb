@@ -12,7 +12,13 @@ class String
 end
 
 class NewStream
+  require 'logger'
+
   def initialize
+    @config = JSON.load_file("config.json")
+    @logger = Logger.new(@config["log"])
+    @logger.level = ENV["NS2_LOG_LEVEL"].to_i || Logger::ERROR
+    @logger.debug("Config: #{@config.inspect}")
     load_webdriver
     load_streams
     load_db
@@ -35,22 +41,25 @@ class NewStream
       end
     end
 
-    @config = JSON.load_file("config.json")
     stream_config = @config["streams"]
     @stream_names.each do |name|
+      @logger.debug("load stream #{name}")
       if stream_config[name] && ! stream_config[name]["disabled"]
-        @streams << Object.const_get(name.to_stream_classname).new(url:stream_config[name]["url"])
+        @streams << Object.const_get(name.to_stream_classname).new(url:stream_config[name]["url"], logger:@logger)
       end
     end
   end
 
   def load_db
     Sequel.connect("sqlite://#{@config["db"]}")
+    @logger.debug("DB #{@config["db"]} connected")
     if Sequel::Model.db.tables.size == 0
+      @logger.debug("Create table")
       require_relative 'scheme'
     end
 
     Dir.glob("models/*.rb").each do |name|
+      @logger.debug("load model #{name}")
       require_relative name
     end
   end
@@ -109,7 +118,7 @@ class NewStream
     begin
       File.open(@config["rss"], "w"){|fd| fd.write(rss_doc)}
     rescue => e
-      puts e
+      @logger.error(e.to_s)
     else
       new_feeds.update(state: "read")
     end

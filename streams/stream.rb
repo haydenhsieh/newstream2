@@ -17,11 +17,13 @@ class String
 end
 
 class Stream
+  require 'logger'
   attr_reader :url
 
   def initialize(**kwargs)
     @url = kwargs[:url]
     @feed = {}
+    @logger = kwargs[:logger] || Logger.new($stdout)
   end
 
   def parse

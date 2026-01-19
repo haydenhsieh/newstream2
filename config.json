@@ -1,6 +1,7 @@
 {
     "db":"feeds.sqlite",
     "rss":"rss/index.xml",
+    "log":"ns2.log",
     "streams": {
         "canon_satera": {
             "disabled": false,
