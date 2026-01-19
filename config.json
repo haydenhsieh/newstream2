@@ -6,6 +6,10 @@
         "canon_satera": {
             "disabled": false,
             "url": "https://canon.jp/biz/product/printer/satera"
+        },
+
+        "ricoh": {
+            "url": "https://www.ricoh.co.jp/products/maker/ricoh/printer"
         }
     }
 }
