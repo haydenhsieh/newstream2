@@ -4,10 +4,16 @@ class Sequel::Model
 end
 
 class Feed < Sequel::Model
+  def before_create
+    self.state ||= "new"
+    self.date  ||= Date.today
+  end
+
   def validate
     super
     validates_presence(:stream)
     validates_presence(:title)
+    validates_unique(:title)
     validates_presence(:date)
   end
 

@@ -13,7 +13,7 @@ class CanonSatera < Stream
         feeds << { stream: self.class.name, date: date.text.strip.to_date, title: content.text.strip, url: @url }
       end
     else
-      return {error: "Parse Error"}
+      return { error: {stream: self.class.name, date: date.today, title: "Parse Error", url: @url} }
     end
     return {feeds: feeds}
   end

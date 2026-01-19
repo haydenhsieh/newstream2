@@ -54,18 +54,27 @@ class NewStream
     end
   end
 
+  def save_feeds(feeds)
+    feeds.each {|feed| Feed.create(feed)}
+  end
+
   def run
     @streams.each do |stream|
+      feeds = nil
       begin
         @web.get(stream.url)
 
         # feeds in json
         feeds = stream.parse(@web)
-
-        # TODO save to db
       rescue => e
-        # TODO Err Feed here
-        p e
+        save_feeds({ stream: stream.class.name, date: Date.today,
+                     title: e.inspect })
+      else
+        if feeds[:error]
+          save_feeds(feeds[:error])
+        else
+          save_feeds(feeds[:feeds])
+        end
       end
     end
 

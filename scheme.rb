@@ -4,4 +4,5 @@ Sequel::Model.db.create_table :feeds do
   String :title
   DateTime :date
   String :url
+  String :state
 end
