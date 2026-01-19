@@ -2,7 +2,6 @@ require_relative 'stream'
 
 class CanonSatera < Stream
   def parse(web)
-    @logger.debug("#{self.class.name} parse #{@url}")
     dates   = web.find_elements(xpath: "//h2/span[text()='新着情報']/following::div[@class='mod-list-news']//div[@class='state']/span[@class='date']")
     contents = web.find_elements(xpath: "//h2/span[text()='新着情報']/following::div[@class='mod-list-news']//div[@class='summary']")
     feeds = []

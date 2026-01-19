@@ -99,6 +99,7 @@ class NewStream
         @web.get(stream.url)
 
         # feeds in json
+        @logger.debug("#{stream.class.name}: parse #{stream.url}")
         feeds = stream.parse(@web)
       rescue => e
         save_feeds({ stream: stream.class.name, date: Date.today,
