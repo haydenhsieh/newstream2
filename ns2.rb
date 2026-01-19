@@ -3,6 +3,7 @@
 require 'selenium-webdriver'
 require 'json'
 require 'sequel'
+require 'rss'
 
 class String
   def to_stream_classname
@@ -55,7 +56,31 @@ class NewStream
   end
 
   def save_feeds(feeds)
-    feeds.each {|feed| Feed.create(feed)}
+    feeds.each do |feed|
+      begin
+        Feed.create(feed)
+      rescue Sequel::ValidationFailed
+        # skip duplicated
+      end
+    end
+  end
+
+  def create_rss(feeds)
+    RSS::Maker.make("2.0") do |maker|
+      maker.channel.author = "hayden"
+      maker.channel.updated = Time.now.to_s
+      maker.channel.description = "Printer News Channel"
+      maker.channel.title   = "Printer News"
+      maker.channel.link    = "http://localhost"
+
+      feeds.each do |feed|
+        maker.items.new_item do |item|
+          item.link  = feed.url
+          item.title = "[#{feed.stream}] #{feed.title}"
+          item.updated = feed.date
+        end
+      end
+    end
   end
 
   def run
@@ -79,6 +104,15 @@ class NewStream
     end
 
     # Create RSS feed
+    new_feeds = Feed.where(state: "new")
+    rss_doc = create_rss(new_feeds)
+    begin
+      File.open(@config["rss"], "w"){|fd| fd.write(rss_doc)}
+    rescue => e
+      puts e
+    else
+      new_feeds.update(state: "read")
+    end
   end
 end
 

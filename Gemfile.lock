@@ -5,6 +5,8 @@ GEM
     bigdecimal (4.0.1)
     logger (1.7.0)
     rexml (3.4.4)
+    rss (0.3.2)
+      rexml
     rubyzip (3.2.2)
     selenium-webdriver (4.39.0)
       base64 (~> 0.2)
@@ -21,6 +23,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  rss (~> 0.3.2)
   selenium-webdriver (~> 4.39)
   sequel (~> 5.100)
 
@@ -29,10 +32,11 @@ CHECKSUMS
   bigdecimal (4.0.1) sha256=8b07d3d065a9f921c80ceaea7c9d4ae596697295b584c296fe599dd0ad01c4a7
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
+  rss (0.3.2) sha256=3bd0446d32d832cda00ba07f4b179401f903b52ea1fdaac0f1f08de61a501efa
   rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
   selenium-webdriver (4.39.0) sha256=984a1e63d39472eaf286bac3c6f1822fa7eea6eed9c07a66ce7b3bc5417ba826
   sequel (5.100.0) sha256=cb0329b62287a01db68eead46759c14497a3fae01b174e2c41da108a9e9b4a12
   websocket (1.2.11) sha256=b7e7a74e2410b5e85c25858b26b3322f29161e300935f70a0e0d3c35e0462737
 
 BUNDLED WITH
-  4.0.4
+   2.5.18
