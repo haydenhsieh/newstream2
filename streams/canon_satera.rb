@@ -10,7 +10,7 @@ class CanonSatera < Stream
     if dates.size == contents.size
       dates.zip(contents).each do |date, content|
         #TODO Enhancing, Url may not exist in all sites, use current streams url for all feeds, customize url in the future
-        feeds << { stream: self.class.name, date: date.text.strip, title: content.text.strip, url: @url }
+        feeds << { stream: self.class.name, date: date.text.strip.to_date, title: content.text.strip, url: @url }
       end
     else
       return {error: "Parse Error"}
