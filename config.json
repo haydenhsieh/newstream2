@@ -2,7 +2,7 @@
     "db":"feeds.sqlite",
     "streams": {
         "canon_satera": {
-            "enabled": true,
+            "disabled": false,
             "url": "https://canon.jp/biz/product/printer/satera"
         }
     }

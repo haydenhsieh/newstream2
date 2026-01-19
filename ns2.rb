@@ -37,7 +37,7 @@ class NewStream
     @config = JSON.load_file("config.json")
     stream_config = @config["streams"]
     @stream_names.each do |name|
-      if stream_config[name] && stream_config[name]["enabled"]
+      if stream_config[name] && ! stream_config[name]["disabled"]
         @streams << Object.const_get(name.to_stream_classname).new(url:stream_config[name]["url"])
       end
     end
