@@ -25,9 +25,9 @@ class NewStream
   end
 
   def load_webdriver
-    @options = Selenium::WebDriver::Options.chrome
+    @options = Selenium::WebDriver::Options.firefox
     @options.args << '--headless=new'
-    @web = Selenium::WebDriver.for :chrome, options: @options
+    @web = Selenium::WebDriver.for :firefox, options: @options
   end
 
   def load_streams
