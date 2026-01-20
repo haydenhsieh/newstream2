@@ -26,6 +26,10 @@
 
         "ktk": {
             "url": "https://www.ktk.gr.jp/news/"
+        },
+
+        "mctrading": {
+            "url": "https://www.recycletoner.co.jp/news"
         }
     }
 }
