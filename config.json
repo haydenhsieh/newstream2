@@ -14,6 +14,10 @@
 
         "fujifilm": {
             "url": "https://www.fujifilm.com/fb/company/news/release?category_id=1183&archive_year=&sort_order=DESC&items_per_page=20"
+        },
+
+        "oki": {
+            "url": "https://www.oki.com/global/ja/press/products-services/"
         }
     }
 }
