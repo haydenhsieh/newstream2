@@ -22,6 +22,10 @@
 
         "nec": {
             "url": "https://jpn.nec.com/printer/laser/"
+        },
+
+        "ktk": {
+            "url": "https://www.ktk.gr.jp/news/"
         }
     }
 }
