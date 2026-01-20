@@ -38,6 +38,15 @@
 
         "ds_japan": {
             "url": "https://www.dsj.co.jp/news"
+        },
+
+        "rec": {
+            "disabled": true,
+            "url": "https://rectoner.com/newproducts/"
+        },
+
+        "graphic": {
+            "url": "https://torec.co.jp/news/"
         }
     }
 }
