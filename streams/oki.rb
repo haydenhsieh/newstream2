@@ -11,7 +11,7 @@ class Oki< Stream
       feeds << {
         stream: self.class.name,
         title: t,
-        date: d,
+        date: d.to_date,
         url: @url
       }
     end

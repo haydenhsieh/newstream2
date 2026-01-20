@@ -7,9 +7,9 @@ class Rtm < Stream
     dates  = web.find_elements(xpath: "//div[contains(@class, 'post--item')]//div[contains(@class, 'post--info')]//ul[contains(@class, 'nav')]/li[1]").map(&:text)
     dates.zip(titles).each do |d, t|
       feeds << {
-        streams: self.class.name,
+        stream: self.class.name,
         title: t,
-        date: d,
+        date: d.to_date,
         url: @url
       }
     end
