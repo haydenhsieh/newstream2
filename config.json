@@ -34,6 +34,10 @@
 
         "mctrading": {
             "url": "https://www.recycletoner.co.jp/news"
+        },
+
+        "ds_japan": {
+            "url": "https://www.dsj.co.jp/news"
         }
     }
 }
