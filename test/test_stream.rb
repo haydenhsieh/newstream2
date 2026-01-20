@@ -16,9 +16,9 @@ if __FILE__ == $PROGRAM_NAME
   config = JSON.load_file(File.join(dir, "config.json"))
   stream_config = config["streams"]
 
-  options = Selenium::WebDriver::Options.chrome
-  options.args << '--headless=new'
-  web = Selenium::WebDriver.for :chrome, options: options
+  options = Selenium::WebDriver::Options.firefox
+  options.args << "--headless=new"
+  web = Selenium::WebDriver.for :firefox, options: options
 
   ARGV.each do |name|
     target = stream_config[name]
