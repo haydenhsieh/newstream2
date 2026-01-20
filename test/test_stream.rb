@@ -8,11 +8,12 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   exit 0 if ARGV.size == 0
-  require_relative '../streams/stream'
+  dir=File.expand_path(File.join(File.dirname($PROGRAM_NAME), ".."))
+  require_relative File.join(dir, "streams/stream")
   require 'selenium-webdriver'
   require 'json'
 
-  config = JSON.load_file("../config.json")
+  config = JSON.load_file(File.join(dir, "config.json"))
   stream_config = config["streams"]
 
   options = Selenium::WebDriver::Options.chrome
@@ -22,7 +23,7 @@ if __FILE__ == $PROGRAM_NAME
   ARGV.each do |name|
     target = stream_config[name]
     if target
-      require_relative "../streams/#{name}"
+      require_relative File.join(dir, "streams/#{name}")
       stream = Object.const_get(name.camelize).new(url: target["url"])
       web.get(stream.url)
       result = stream.parse(web)
