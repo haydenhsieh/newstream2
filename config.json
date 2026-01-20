@@ -18,6 +18,10 @@
 
         "oki": {
             "url": "https://www.oki.com/global/ja/press/products-services/"
+        },
+
+        "nec": {
+            "url": "https://jpn.nec.com/printer/laser/"
         }
     }
 }
