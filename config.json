@@ -47,6 +47,11 @@
 
         "graphic": {
             "url": "https://torec.co.jp/news/"
+        },
+
+        "cve": {
+            "cve_url": "https://services.nvd.nist.gov/rest/json/cves/2.0",
+            "cpe_url": "https://services.nvd.nist.gov/rest/json/cpes/2.0"
         }
     }
 }
