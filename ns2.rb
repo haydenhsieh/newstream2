@@ -43,8 +43,8 @@ class NewStream
 
     stream_config = @config[:streams]
     @stream_names.each do |name|
-      @logger.debug("load stream #{name}")
       if stream_config[name] && ! stream_config[name][:disabled]
+        @logger.debug("load stream #{name}")
         @streams << Object.const_get(name.to_stream_classname).new(logger:@logger, **stream_config[name])
       end
     end
