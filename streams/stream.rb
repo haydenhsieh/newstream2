@@ -24,6 +24,7 @@ class Stream
     @url = kwargs[:url]
     @feed = {}
     @logger = kwargs[:logger] || Logger.new($stdout)
+    @config = kwargs
   end
 
   def parse

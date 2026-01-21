@@ -14,9 +14,9 @@ end
 class NewStream
   require 'logger'
 
-  def initialize
-    @config = JSON.load_file("config.json")
-    @logger = Logger.new(@config["log"])
+  def initialize(**kwargs)
+    @config = JSON.load_file(kwargs[:config] || "config.json", {symbolize_names: true})
+    @logger = Logger.new(@config[:log])
     @logger.level = ENV["NS2_LOG_LEVEL"].to_i || Logger::ERROR
     @logger.debug("Config: #{@config.inspect}")
     load_webdriver
@@ -41,18 +41,18 @@ class NewStream
       end
     end
 
-    stream_config = @config["streams"]
+    stream_config = @config[:streams]
     @stream_names.each do |name|
       @logger.debug("load stream #{name}")
-      if stream_config[name] && ! stream_config[name]["disabled"]
-        @streams << Object.const_get(name.to_stream_classname).new(url:stream_config[name]["url"], logger:@logger)
+      if stream_config[name] && ! stream_config[name][:disabled]
+        @streams << Object.const_get(name.to_stream_classname).new(logger:@logger, **stream_config[name])
       end
     end
   end
 
   def load_db
-    Sequel.connect("sqlite://#{@config["db"]}")
-    @logger.debug("DB #{@config["db"]} connected")
+    Sequel.connect("sqlite://#{@config[:db]}")
+    @logger.debug("DB #{@config[:db]} connected")
     if Sequel::Model.db.tables.size == 0
       @logger.debug("Create table")
       require_relative 'scheme'
@@ -96,7 +96,11 @@ class NewStream
     @streams.each do |stream|
       feeds = nil
       begin
-        @web.get(stream.url)
+        if stream.url
+          @web.get(stream.url)
+        else
+          stream.get(@web)
+        end
 
         # feeds in json
         @logger.debug("#{stream.class.name}: parse #{stream.url}")
@@ -117,7 +121,7 @@ class NewStream
     new_feeds = Feed.where(state: "new")
     rss_doc = create_rss(new_feeds)
     begin
-      File.open(@config["rss"], "w"){|fd| fd.write(rss_doc)}
+      File.open(@config[:rss], "w"){|fd| fd.write(rss_doc)}
     rescue => e
       @logger.error(e.to_s)
     else
@@ -127,7 +131,14 @@ class NewStream
 end
 
 def main
-  NewStream.new.run
+  require 'optparse'
+  options = {config: "config.json"}
+  OptionParser.new do |opt|
+    opt.on("-c", "--config CONF_FILE")
+  end.parse!(into: options)
+
+  ns = NewStream.new(**options)
+  ns.run
 end
 
 main if __FILE__ == $PROGRAM_NAME
