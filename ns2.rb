@@ -37,7 +37,7 @@ class NewStream
     Dir.glob("#{dir}/*.rb").each do |name|
       require_relative name
       if File.basename(name) != "stream.rb"
-        @stream_names << File.basename(name).gsub(/.rb$/,"")
+        @stream_names << File.basename(name).gsub(/.rb$/,"").to_sym
       end
     end
 
@@ -45,7 +45,7 @@ class NewStream
     @stream_names.each do |name|
       if stream_config[name] && ! stream_config[name][:disabled]
         @logger.debug("load stream #{name}")
-        @streams << Object.const_get(name.to_stream_classname).new(logger:@logger, **stream_config[name])
+        @streams << Object.const_get(name.to_s.to_stream_classname).new(logger:@logger, **stream_config[name])
       end
     end
   end
