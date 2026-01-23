@@ -118,6 +118,7 @@ class NewStream
       end
     end
 
+    @logger.debug("Making RSS feeds")
     # Create RSS feed
     new_feeds = Feed.where(state: "new")
     rss_doc = create_rss(new_feeds)
@@ -128,6 +129,7 @@ class NewStream
     else
       new_feeds.update(state: "read")
     end
+    @logger.debug("exit")
   end
 end
 
