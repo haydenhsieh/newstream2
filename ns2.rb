@@ -93,8 +93,9 @@ class NewStream
   end
 
   def run
-    @streams.each do |stream|
+    @streams.each_with_index do |stream, i|
       feeds = nil
+      @logger.debug("[#{i+1}/#{@streams.size}] #{stream.class.name}")
       begin
         if stream.url
           @web.get(stream.url)

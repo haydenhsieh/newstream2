@@ -21,8 +21,6 @@ class Cve < Stream
       URI.open(uri) do |f|
         response = f.read
         @cve_response = JSON.parse(response) if response
-        @logger.debug("cve response")
-        @logger.debug(@cve_response)
       end
       rescue OpenURI::HTTPError => e
         @logger.error("Error cve open #{uri}: #{e.to_s}")
@@ -42,8 +40,6 @@ class Cve < Stream
       URI.open(uri) do |f|
         response = f.read
         @cpe_response = JSON.parse(response) if response
-        @logger.debug("cpe response")
-        @logger.debug(@cpe_response)
       end
       rescue OpenURI::HTTPError => e
         @logger.error("Error open cpe #{url}: #{e.to_s}")
