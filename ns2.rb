@@ -84,9 +84,9 @@ class NewStream
 
       feeds.each do |feed|
         maker.items.new_item do |item|
-          item.link  = feed.url
+          item.link  = feed.url || "http://localhost"
           item.title = "[#{feed.stream}] #{feed.title}"
-          item.updated = feed.date
+          item.updated = feed.date || Date.today
         end
       end
     end
@@ -107,11 +107,11 @@ class NewStream
         @logger.debug("#{stream.class.name}: parse #{stream.url}")
         feeds = stream.parse(@web)
       rescue => e
-        save_feeds({ stream: stream.class.name, date: Date.today,
-                     title: e.inspect })
+        save_feeds([{ stream: stream.class.name, date: Date.today,
+                     title: e.to_s }])
       else
         if feeds[:error]
-          save_feeds(feeds[:error])
+          save_feeds([feeds[:error]])
         else
           save_feeds(feeds[:feeds])
         end
